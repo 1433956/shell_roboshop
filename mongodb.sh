@@ -13,7 +13,7 @@ N="\e[0m"
  echo -e "$G script is execution started at:$(date) $N" | tee -a $LOG_FILE
 
  #check user has root privilages 
-if [ $userid -ne 0]
+if [ $userid -ne 0 ]
 then
      echo -e "$R ERROR:: Please run this script with root access $N" | tee -a $LOG_FILE
      exit 1
@@ -23,7 +23,7 @@ else
 fi
 
 # validate functions takes input as exit status, what command they tried to install
-$VALIDATE() {
+VALIDATE() {
     if [ $1 -eq 0 ]
     then
         echo -e "$2  is ... $G SUCCESS $N" | tee -a $LOG_FILE

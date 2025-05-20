@@ -51,8 +51,6 @@ id roboshop
   else
        echo -e"System user roboshop already created ... $Y SKIPPING $N"
   fi
-
-
 mkdir -p /app
 VALIDATE $? "Creating app directory"
 
@@ -64,7 +62,7 @@ cd /app
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "unzipping catalogue folder"
  
- npm install
+npm install
 
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "Copying catalogue service"
@@ -73,11 +71,12 @@ systemctl daemon-reload &>>$LOG_FILE
 systemctl enable catalogue  &>>$LOG_FILE
 systemctl start catalogue
 VALIDATE $? "Starting Catalogue"
- cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongod.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongod.repo
 
- dnf install mongodb-mongosh -y &>>$LOG_FILE
- VALIDATE $? "Installing MongoDB Client"
- STATUS=$(mongosh --host mongodb.devops73.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+dnf install mongodb-mongosh -y &>>$LOG_FILE
+VALIDATE $? "Installing MongoDB Client"
+
+STATUS=$(mongosh --host mongodb.devops73.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
   if [ $STATUS -lt 0 ]
   then
        mongosh --host mongodb.daws84s.site </app/db/master-data.js &>>$LOG_FILE

@@ -74,10 +74,10 @@ VALIDATE $? "catalogue service is created"
 systemctl daemon-reload &>> $Log_File
 VALIDATE $? "reloading catalogue service"
 
-systemctl enable roboshop &>> $Log_File
+systemctl enable catalogue &>> $Log_File
 VALIDATE $? "enabling catalogue service"
 
-systemctl start roboshop
+systemctl start catalogue 
 VALIDATE $? "starting catalogue service"
 
 # MongoDB

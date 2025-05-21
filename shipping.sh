@@ -55,29 +55,29 @@ fi
 mkdir -p /app 
 VALIDATE $? "Creating app directory"
 
-curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>>$LOG_FILE
+curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>>$Log_File
 VALIDATE $? "Downloading shipping"
 
 rm -rf /app/*
 cd /app &>>$Log_File
 
-unzip /tmp/shipping.zip &>>$LOG_FILE
+unzip /tmp/shipping.zip &>>$Log_File
 VALIDATE $? "unzipping shipping"
- mvn clean package &>>$LOG_FILE
+ mvn clean package &>>$Log_File
 
-mv target/shipping-1.0.jar shipping.jar  &>>$LOG_FILE
+mv target/shipping-1.0.jar shipping.jar  &>>$Log_File
 VALIDATE $? "Moving and renaming Jar file"
 
 cp $SYS_DIR/shipping.service /etc/systemd/system/shipping.service
 VALIDATE $? "creating new service"
 
-systemctl daemon-reload &>>$LOG_FILE
+systemctl daemon-reload &>>$Log_File
 VALIDATE $? " reloading service"
 
-systemctl enable shipping  &>>$LOG_FILE
+systemctl enable shipping  &>>$Log_File
 VALIDATE $? "Enabling Shipping"
 
-systemctl start shipping &>>$LOG_FILE
+systemctl start shipping &>>$Log_File
 VALIDATE $? "Starting Shipping 
 #mysql 
 
@@ -90,23 +90,22 @@ else
      echo -e "$G mysql is already installed $N" &>>$Log_File
 fi
 
-
 mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$Log_File
 
 if [ $? -ne 0 ]
 then 
-    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASS < /app/db/schema.sql        &>>$LOG_FILE
-    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql  &>>$LOG_FILE
-    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
+    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASS < /app/db/schema.sql        &>>$Log_File
+    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql  &>>$Log_File
+    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$Log_File
     VALIDATE $? "Loading data into MySQL"
 else
     echo -e "Data is already loaded into MySQL ... $Y SKIPPING $N"
 fi
 
 
-systemctl restart shipping &>>$LOG_FILE
+systemctl restart shipping &>>$Log_File
 VALIDATE $? "Restart shipping"
 end_time-$(date +%s)
 TOTAL_TIME=$(( $end_time - $Start_time ))
 
-echo -e "Script exection completed successfully, $Y time taken: $TOTAL_TIME seconds $N" | tee -a $LOG_FILE
+echo -e "Script exection completed successfully, $Y time taken: $TOTAL_TIME seconds $N" | tee -a $Log_File

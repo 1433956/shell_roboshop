@@ -29,14 +29,14 @@ read -s MYSQL_ROOT_PASSWORD
 VALIDATE() {
     if [ $1 -eq 0 ]
     then
-        echo -e"$2.. $G success $N" | tee -a $Log_File
+        echo -e "$2.. $G success $N" | tee -a $Log_File
     else
-        echo -e"$2.. $R failed $N" | tee -a $Log_File
+        echo -e "$2.. $R failed $N" | tee -a $Log_File
         exit 1
     fi
 }
 
-dnf install mvn -y &>> $Log_File
+dnf install maven -y &>> $Log_File
 VALIDATE $? "installing maven"
 
 #create system user 

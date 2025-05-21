@@ -16,7 +16,7 @@ mkdir -p $LOGS_FOLDER
 
 
 # check the user has root priveleges or not
-if [ $USERID -ne 0 ]
+if [ $userid -ne 0 ]
 then
     echo -e "$R ERROR:: Please run this script with root access $N" | tee -a $LOG_FILE
     exit 1 #give other than 0 upto 127

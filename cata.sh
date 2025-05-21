@@ -59,7 +59,7 @@ rm -rf /app/* &>>$Log_File
 
 if [ $? -eq 0 ]
 then
-    echo -e"$G unzipping the catalogue project $N" 
+    echo -e "$G unzipping the catalogue project $N" 
     unzip /tmp/catalogue.zip &>>$Log_File
 else
      echo -e "$Y ALready extracted $N"
@@ -83,16 +83,8 @@ VALIDATE $? "starting catalogue service"
 # MongoDB
 
 cp $SYS_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$Log_File
-
-mongodb-mongosh -V &>>$LOG_FILE
-
-if [ $? -ne 0]
-then
-     echo -e "$Y mongodb is not installed $N" &>>$Log_File
-     dnf install mongodb-mongosh -y &>>$Log_File
-else
-     echo -e"$G Mongodb is already installed $N" &>>$Log_File
-fi
+echo -e "$Y mongodb is not installed $N" &>>$Log_File
+dnf install mongodb-mongosh -y &>>$Log_File
 STATUS=$(mongosh --host mongodb.daws84s.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
 if [ $STATUS -lt 0]

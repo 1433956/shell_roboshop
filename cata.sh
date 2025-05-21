@@ -85,7 +85,7 @@ VALIDATE $? "starting catalogue service"
 cp $SYS_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$Log_File
 echo -e "$Y mongodb is not installed $N" &>>$Log_File
 dnf install mongodb-mongosh -y &>>$Log_File
-STATUS=$(mongosh --host mongodb.daws84s.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+STATUS=$(mongosh --host mongodb.devops73.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
 if [ $STATUS -lt 0]
 then

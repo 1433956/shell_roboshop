@@ -44,8 +44,8 @@ VALIDATE $? "installing maven"
 
 if [ $? -ne 0 ]
 then
-    echo -e"$R system user is not created...$N"&>>$Log_File
-    echo -e"$G  create system user .. $N"&>>$Log_File
+    echo -e "$R system user is not created...$N"&>>$Log_File
+    echo -e "$G  create system user .. $N"&>>$Log_File
     useradd --system --home /app --shell /sbin/nologin --comment "creating system user for catalogue service" roboshop
  else
     echo -e "$G system user is already created $"&>>$Log_File

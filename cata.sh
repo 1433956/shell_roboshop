@@ -89,7 +89,7 @@ VALIDATE $? "installing mongodb "
 STATUS=$(mongosh --host mongodb.devops73.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 #mongosh --host mongodb.devops73.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
 
-if [ $STATUS -lt 0]
+if [ $STATUS -lt 0 ]
 then
     mongosh --host mongodb.devops73.site </app/db/master-data.js &>>$Log_File
     VALIDATE $? "Loading data into MongoDB"

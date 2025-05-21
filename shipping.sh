@@ -78,17 +78,13 @@ systemctl enable shipping  &>>$Log_File
 VALIDATE $? "Enabling Shipping"
 
 systemctl start shipping &>>$Log_File
-VALIDATE $? "Starting Shipping 
+VALIDATE $? "Starting Shipping "
 #mysql 
 
-mysql -V
 
-if [ $? -ne 0]
-then 
-    dnf install mysql -y &>>$Log_File
-else
-     echo -e "$G mysql is already installed $N" &>>$Log_File
-fi
+dnf install mysql -y &>>$Log_File
+VALIDATE $? "installing MY SQL"
+
 
 mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$Log_File
 
@@ -107,4 +103,4 @@ systemctl restart shipping &>>$Log_File
 VALIDATE $? "Restart shipping"
 end_time=$(date +%s)
 TOTAL_TIME=$(( $end_time - $Start_time ))
-echo -e "Script exection completed successfully, $Y time taken: $TOTAL_TIME seconds $N" | tee -a $Log_File
+echo -e "Script exection completed successfully, $Y time taken: $TOTAL_TIME seconds $N " | tee -a $Log_File

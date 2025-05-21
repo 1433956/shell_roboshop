@@ -23,9 +23,9 @@ fi
 VALIDATE() {
     if [ $1 -eq 0 ]
     then
-        echo -e"$2.. $G success $N" | tee -a $Log_File
+        echo -e "$2.. $G success $N" | tee -a $Log_File
     else
-        echo -e"$2.. $R failed $N" | tee -a $Log_File
+        echo -e "$2.. $R failed $N" | tee -a $Log_File
         exit 1
     fi
 }
@@ -40,21 +40,19 @@ dnf install nodejs -y &>>$Log_File
 VALIDATE $? "installing nodejs"
 
 #create system user 
- id roboshop
-
+ 
+id roboshop
 if [ $? -ne 0 ]
 then
-    echo -e"$R system user is not created...$N"&>>$Log_File
-    echo -e"$G  create system user .. $N"&>>$Log_File
-    useradd --system --home /app --shell /sbin/nologin --comment "creating system user for catalogue service" roboshop
- else
-    echo -e "$G system user is already created $"&>>$Log_File
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$Log_File
+    VALIDATE $? "Creating roboshop system user"
+else
+    echo -e "System user roboshop already created ... $Y SKIPPING $N"
 fi
+mkdir -p /app 
 
-mkdir -p /app &>>$Log_File
-
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
-VALIDATE $? "downloading catalogue project"
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$Log_File
+VALIDATE $? " downloading catalogue project "
 
 rm -rf /app/* &>>$Log_File
  cd /app
@@ -62,7 +60,7 @@ rm -rf /app/* &>>$Log_File
 if [ $? -eq 0 ]
 then
     echo -e"$G unzipping the catalogue project $N" 
-    unzip /tmp/catalogue.zip &>>$LOG_FILE
+    unzip /tmp/catalogue.zip &>>$Log_File
 else
      echo -e "$Y ALready extracted $N"
 fi
@@ -99,7 +97,7 @@ STATUS=$(mongosh --host mongodb.daws84s.site --eval 'db.getMongo().getDBNames().
 
 if [ $STATUS -lt 0]
 then
-    mongosh --host mongodb.devops73.site </app/db/master-data.js &>>$LOG_FILE
+    mongosh --host mongodb.devops73.site </app/db/master-data.js &>>$Log_File
     VALIDATE $? "Loading data into MongoDB"
 else
     echo -e "Data is already loaded ... $Y SKIPPING $N"

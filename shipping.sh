@@ -1,5 +1,5 @@
 #!/bin/bash
-Start_time= $(date +%s)
+Start_time=$(date +%s)
 
 userid=$(id -u)
 R="\e[31m"

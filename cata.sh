@@ -81,12 +81,13 @@ systemctl start catalogue
 VALIDATE $? "starting catalogue service"
 
 # MongoDB
-
+#cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 cp $SYS_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$Log_File
 echo -e "$Y mongodb is not installed $N" &>>$Log_File
-dnf install mongodb-mongosh -y &>>$Log_File
-VALIDATE $? "installing mongodb"
-STATUS=$(mongodb-mongosh --host mongodb.devops73.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+dnf install mongodb-mongosh -y &>> $Log_File
+VALIDATE $? "installing mongodb "
+STATUS=$(mongosh --host mongodb.devops73.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+#mongosh --host mongodb.devops73.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
 
 if [ $STATUS -lt 0]
 then

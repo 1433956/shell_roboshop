@@ -94,8 +94,8 @@ mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$L
 
 if [ $? -ne 0 ]
 then 
-    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASS < /app/db/schema.sql        &>>$Log_File
-    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql  &>>$Log_File
+    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASS < /app/db/schema.sql &>>$Log_File
+    mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql &>>$Log_File
     mysql -h mysql.devops73.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$Log_File
     VALIDATE $? "Loading data into MySQL"
 else
@@ -105,7 +105,6 @@ fi
 
 systemctl restart shipping &>>$Log_File
 VALIDATE $? "Restart shipping"
-end_time-$(date +%s)
+end_time=$(date +%s)
 TOTAL_TIME=$(( $end_time - $Start_time ))
-
 echo -e "Script exection completed successfully, $Y time taken: $TOTAL_TIME seconds $N" | tee -a $Log_File
